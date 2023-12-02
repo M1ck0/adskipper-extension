@@ -1,0 +1,9 @@
+body {
+  width: 300px;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}

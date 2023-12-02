@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.options-page {
+  display: flex;
+  gap: 10px;
+  background-color: #f1f1f1;
+}
+
+.options-page .links {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  border-right: 1px solid #f1f1f1;
+  background-color: #ffffff;
+  flex-shrink: 0;
+  width: 290px;
+}
+
+.options-page .page-content {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 20px;
+}
+
+.options-page .page-content .data-item {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.options-page .links .helper-message {
+  font-style: italic;
+  padding-left: 15px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.options-page .links > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  border-bottom: 1px solid #eee;
+  padding: 15px 25px 15px 15px;
+  cursor: pointer;
+}
+
+.options-page .links div h5 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.options-page .links div p {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.4;
+  margin: 6px 0 0;
+  font-style: italic;
+}
+
+.save-button-container {
+  border-top: 1px solid #eee;
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+button#save {
+  background-color: #4359e7;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+button#save:hover {
+  background-color: #3142bb;
+}
+
+p#status {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.4;
+  margin: 6px 0 0;
+  font-style: italic;
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Ad Skipper",
+  "description": "Automatic ad skipping extension",
+  "version": "2",
+  "icons": {
+    "128": "icons/128.png",
+    "48": "icons/48.png",
+    "32": "icons/32.png",
+    "16": "icons/16.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "icons/128.png"
+  },
+  "options_page": "options/options.html",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://youtube.com/"
+  ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": ["scripts/youtube.js"],
+      "matches": ["https://*.youtube.com/*"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "miletadulovic98@gmail.com"
+    }
+  }
+}

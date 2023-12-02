@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AdSkipper - Options</title>
+
+    <link rel="stylesheet" href="./options.css">
+  </head>
+  <body>
+    <div class="options-page">
+      <div class="links">
+        <!-- Links are injected here -->
+        <p class="helper-message">More websites coming soon</p>
+      </div>
+      <div class="page-content">
+        <div class="data-item" id="data-item-youtube">
+          <switch-button id="switch-youtube-ads" label="Skip Ads" tooltip="Skips ads automatically without need for user interaction"></switch-button>
+          <switch-button id="switch-youtube-shorts" label="Hide Shorts" tooltip="Hides shorts on home page, profile page and navigation links"></switch-button>
+        </div>
+
+        <div class="save-button-container">
+          <button id="save">Save</button>
+        </div>
+        <p id="status"></p>
+      </div>
+    </div>
+
+    <script src="components/switch/switch.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>
