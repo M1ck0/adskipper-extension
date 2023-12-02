@@ -1,3 +1,4 @@
+![adskipper logo](https://www.adskipper.me/image.png)
 # Ad Skipper
 Ad Skipper is a browser extension designed to enhance your browsing experience on web by automatically skipping ads and much more.
 
