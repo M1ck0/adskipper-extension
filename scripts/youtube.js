@@ -48,9 +48,9 @@ const hideYoutubeShorts = () => {
 }
 
 if (typeof window !== "undefined") {
-  chrome.storage.sync.get(["youtube", "youtube-shorts"]).then(({youtube, "youtube-shorts": youtubeShorts}) => {
+  chrome.storage.sync.get(["youtube-ads", "youtube-shorts"]).then(({"youtube-ads": youtubeAds, "youtube-shorts": youtubeShorts}) => {
     setInterval(() => {
-      if(youtube) {
+      if(youtubeAds === true || youtubeAds === undefined) {
         try {
           stopYoutubeAd();
         } catch (e) {

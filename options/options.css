@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .options-page {
@@ -38,13 +39,18 @@
   font-weight: 600;
 }
 
-.options-page .links > div {
+.options-page .links .link-item {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 20px;
   border-bottom: 1px solid #eee;
   padding: 15px 25px 15px 15px;
   cursor: pointer;
+}
+
+.options-page .links .link-item .link-item-title {
+  display: flex;
+  gap: 10px;
 }
 
 .options-page .links div h5 {

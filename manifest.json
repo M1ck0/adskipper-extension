@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Ad Skipper",
   "description": "Automatic ad skipping extension",
-  "version": "2",
+  "version": "2.4",
   "icons": {
     "128": "icons/128.png",
     "48": "icons/48.png",
@@ -10,12 +10,15 @@
     "16": "icons/16.png"
   },
   "action": {
-    "default_popup": "popup/popup.html",
     "default_icon": "icons/128.png"
   },
-  "options_page": "options/options.html",
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
   "permissions": [
-    "storage"
+    "storage",
+    "https://fonts.googleapis.com/"
   ],
   "host_permissions": [
     "https://youtube.com/"

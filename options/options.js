@@ -1,15 +1,24 @@
 // Defining constants
 const WEBSITES = [
-  {domain: "https://youtube.com", name: "youtube"},
+  {domain: "https://youtube.com", name: "youtube", sidebarName: "YouTube"},
 ];
 const OPTIONS = {
   "youtube": ["ads", "shorts"],
 };
 const SAVE_BUTTON_ID = 'save';
 
+const DEFAULT_OPTIONS = {
+  "youtube-ads": true,
+  "youtube-shorts": false
+};
+
+chrome.runtime.onInstalled.addListener(() => {
+  // Store the default options in chrome.storage.sync
+  chrome.storage.sync.set(DEFAULT_OPTIONS);
+});
+
 // Generic functions to operate on websites
 const resetWebsiteAppearance = (website) => {
-  console.log('here: ', website)
   document.getElementById(`data-item-${website.name}`).style.display = "none";
   document.getElementById(`link-item-${website.name}`).style.backgroundColor = "#fff";
 }
@@ -35,8 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
 const restoreOptions = () => {
   chrome.storage.sync.get((items) => {
     WEBSITES.forEach(website => {
-      OPTIONS[website.name].forEach(option => {
-        document.getElementById(`switch-${website.name}-${option}`).checked = items[`${website.name}-${option}`];
+      OPTIONS[website.name].forEach((option) => {
+        const storedValue = items[`${website.name}-${option}`];
+        
+        // By default, set `ads` option to true. Other options default to false.
+        const defaultValue = option === 'ads';
+        
+        document.getElementById(`switch-${website.name}-${option}`).checked = (storedValue !== undefined) ? storedValue : defaultValue;
       });
     });
   });
@@ -53,6 +67,10 @@ const saveOptions = () => {
   chrome.storage.sync.set(options, function() {
     // Show message when item is saved
     document.getElementById('status').innerHTML = 'Options saved successfully.';
+    
+    setTimeout(() => {
+      document.getElementById('status').innerHTML = '';
+    }, 1500)
   });
 };
 
@@ -66,15 +84,15 @@ document.addEventListener('DOMContentLoaded', function() {
 // Use the Array.prototype.map method to create HTML for each website
 const websiteHtml = WEBSITES.map((website) =>
   `<div class="link-item" id="link-item-${website.name}">
-    <img
-      src="https://www.google.com/s2/favicons?domain=${website.domain}&sz=128"
-      alt="${website.name} logo"
-      width="24"
-    />
-    <div>
-      <h5>${website.name.charAt(0).toUpperCase() + website.name.slice(1)}</h5>
-      <p>Toggle ${website.name.charAt(0).toUpperCase() + website.name.slice(1)} features on or off</p>
+    <div class="link-item-title">
+      <img
+        src="https://www.google.com/s2/favicons?domain=${website.domain}&sz=128"
+        alt="${website.name} logo"
+        width="24"
+      />
+      <h5>${website.sidebarName}</h5>
     </div>
+    <p>Toggle ${website.sidebarName} features on or off</p>
   </div>`
 ).join('');
 
