@@ -1,21 +1,26 @@
 // Defining constants
 const WEBSITES = [
   {domain: "https://youtube.com", name: "youtube", sidebarName: "YouTube"},
+  {domain: "https://xvideos.com", name: "xvideos", sidebarName: "XVideos"},
+  {domain: "https://pornhub.com", name: "pornhub", sidebarName: "PornHub"},
 ];
+
 const OPTIONS = {
   "youtube": ["ads", "shorts"],
+  "xvideos": ["ads", "popup"],
+  "pornhub": ["ads"],
 };
 const SAVE_BUTTON_ID = 'save';
 
-const DEFAULT_OPTIONS = {
-  "youtube-ads": true,
-  "youtube-shorts": false
-};
-
-chrome.runtime.onInstalled.addListener(() => {
-  // Store the default options in chrome.storage.sync
-  chrome.storage.sync.set(DEFAULT_OPTIONS);
-});
+// const DEFAULT_OPTIONS = {
+//   "youtube-ads": true,
+//   "youtube-shorts": false
+// };
+//
+// chrome.runtime.onInstalled.addListener(() => {
+//   // Store the default options in chrome.storage.sync
+//   chrome.storage.sync.set(DEFAULT_OPTIONS);
+// });
 
 // Generic functions to operate on websites
 const resetWebsiteAppearance = (website) => {

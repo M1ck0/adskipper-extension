@@ -3,8 +3,9 @@
 Ad Skipper is a browser extension designed to enhance your browsing experience on web by automatically skipping ads and much more.
 
 ## Features
-- Automatically skips ads on YouTube.
+- Automatically skips ads.
 - Ability to hide short videos on YouTube.
+- Remove popups and much more
 
 ## Usage
 After installing the extension, you can navigate to the extension's options page where you will find switches that allow you to toggle on or off the different features for each website that the extension supports.
@@ -13,10 +14,11 @@ Currently, the extension supports:
 - YouTube:
   - Automatically skip ads
   - Hide short videos
-
-The options are:
-- **Skip Ads**: When turned `on`, the extension will automatically skip ads in YouTube videos.
-- **Hide Shorts**: When turned `on`, the extension will hide short videos on the YouTube homepage, user profile pages, and navigation links.
+- PornHub:
+  - Automatically skip ads
+- XVideos
+  - Automatically skip ads
+  - Removes big popup
 
 After adjusting your settings, don't forget to click the `Save` button to save your options.
 

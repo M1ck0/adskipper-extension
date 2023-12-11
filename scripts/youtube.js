@@ -1,32 +1,32 @@
 const defined = v => v !== null && v !== undefined;
 
-const stopAd = (selectors, skipButtonSelector, videoSelector, overlaySelector) => {
-  const adElement = document.querySelector(selectors);
-  const overlayAds = document.querySelectorAll(overlaySelector);
+const url = new URL(window.location.href);
+let baseDomain = url.hostname;
+
+// Check if there are subdomains and retrieve only the base domain
+if (baseDomain.split('.').length > 2) {
+  baseDomain = baseDomain.split('.').slice(-2).join('.');
+}
+
+const stopYoutubeAd = () => {
+  const adElement = document.querySelector(".ad-showing");
+  const overlayAds = document.querySelectorAll(".ytp-ad-overlay-slot");
   
   if (defined(adElement)) {
-    const video = document.querySelector(videoSelector);
+    const video = document.querySelector("video");
     
-    if (defined(video)) {
-      video.currentTime = video.duration;
-      
-      setTimeout(() => {
-        const skipButtons = document.querySelectorAll(skipButtonSelector);
-        
-        for (const skipButton of skipButtons) {
-          skipButton.click();
-        }
-      }, 100);
+    video.currentTime = video?.duration || 9999; // if video?.duration is NaN set video to 9999 sec to make sure it goes to the end
+    
+    const skipButtons = document.querySelectorAll(".ytp-ad-skip-button-modern");
+    
+    for (const skipButton of skipButtons) {
+      skipButton.click();
     }
   }
   
   for (const overlayAd of overlayAds) {
     overlayAd.style.visibility = "hidden";
   }
-};
-
-const stopYoutubeAd = () => {
-  stopAd('.ad-showing', '.ytp-ad-skip-button-modern', 'video', '.ytp-ad-overlay-slot');
 };
 
 const hideYoutubeShorts = () => {
@@ -48,23 +48,24 @@ const hideYoutubeShorts = () => {
 }
 
 if (typeof window !== "undefined") {
-  chrome.storage.sync.get(["youtube-ads", "youtube-shorts"]).then(({"youtube-ads": youtubeAds, "youtube-shorts": youtubeShorts}) => {
-    setInterval(() => {
-      if(youtubeAds === true || youtubeAds === undefined) {
-        try {
-          stopYoutubeAd();
-        } catch (e) {
-          console.error(e);
+  chrome.storage.sync.get(["youtube-ads", "youtube-shortcuts"])
+    .then(({"youtube-ads": youtubeAds, "youtube-shortcuts": youtubeShortcuts}) => {
+      setInterval(() => {
+        if (youtubeAds === true || youtubeAds === undefined) {
+          try {
+            stopYoutubeAd();
+          } catch (e) {
+            console.error(e);
+          }
         }
-      }
-      
-      if(youtubeShorts) {
-        try {
-          hideYoutubeShorts();
-        } catch (e) {
-          console.error(e);
+
+        if (youtubeShortcuts) {
+          try {
+            hideYoutubeShorts();
+          } catch (e) {
+            console.error(e);
+          }
         }
-      }
-    }, 100);
-  });
+      }, 100)
+    });
 }
