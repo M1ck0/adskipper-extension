@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Ad Skipper",
   "description": "Automatic ad skipping extension",
-  "version": "2.5",
+  "version": "2.8",
   "icons": {
     "128": "icons/128.png",
     "48": "icons/48.png",
@@ -20,25 +20,17 @@
     "storage"
   ],
   "host_permissions": [
-    "https://youtube.com/",
-    "https://xvideos.com/",
-    "https://pornhub.com/"
+    "https://youtube.com/"
   ],
   "content_scripts": [
     {
       "all_frames": true,
-      "js": ["scripts/youtube.js"],
-      "matches": ["https://*.youtube.com/*"]
-    },
-    {
-      "all_frames": true,
-      "js": ["scripts/xvideos.js"],
-      "matches": ["https://*.xvideos.com/*"]
-    },
-    {
-      "all_frames": true,
-      "js": ["scripts/pornhub.js"],
-      "matches": ["https://*.pornhub.com/*"]
+      "js": [
+        "scripts/youtube.js"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ]
     }
   ],
   "browser_specific_settings": {

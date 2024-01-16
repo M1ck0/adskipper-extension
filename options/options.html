@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>AdSkipper - Options</title>
+<head>
+  <title>AdSkipper - Options</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./options.css">
+  <link rel="stylesheet" href="./options.css">
 
-  </head>
-  <body>
-    <div class="options-page">
-      <div class="links">
-        <!-- Links are injected here -->
-        <p class="helper-message">More websites coming soon</p>
-      </div>
-      <div class="page-content">
-        <div class="data-item" id="data-item-youtube">
-          <switch-button id="switch-youtube-ads" label="Skip Ads" tooltip="Skips ads automatically without need for user interaction"></switch-button>
-          <switch-button id="switch-youtube-shorts" label="Hide Shorts" tooltip="Hides shorts on home page, profile page and navigation links"></switch-button>
-        </div>
-        <div class="data-item" id="data-item-xvideos">
-          <switch-button id="switch-xvideos-ads" label="Skip Ads" tooltip="Skips ads automatically without need for user interaction"></switch-button>
-          <switch-button id="switch-xvideos-popup" label="Remove big Pop-up" tooltip="Removes big Pop-up ad that shows when going to another page"></switch-button>
-        </div>
-        <div class="data-item" id="data-item-pornhub">
-          <switch-button id="switch-pornhub-ads" label="Skip Ads" tooltip="Skips ads automatically without need for user interaction"></switch-button>
-        </div>
+</head>
+<body>
+<div class="options-page">
+  <div class="links">
+    <!-- Links are injected here -->
+    <p class="helper-message">More websites coming soon</p>
+  </div>
+  <div class="page-content">
+    <div class="data-item" id="data-item-youtube">
+      <switch-button id="switch-youtube-ads" label="Skip Ads"
+                     tooltip="Skips ads automatically without need for user interaction"></switch-button>
+      <switch-button id="switch-youtube-shorts" label="Hide Shorts"
+                     tooltip="Hides shorts on home page, profile page and navigation links"></switch-button>
+      <switch-button id="switch-youtube-recommendations" label="Remove recommendations"
+                     tooltip="Eliminate the end-screen recommendations that appear over the video player while you are watching the current video."></switch-button>
+      <switch-button id="switch-youtube-errors" label="Show Errors"
+                     tooltip="If the ad skipper malfunctions, it will log the error locally, and you can share it with the developer. No sensitive data is stored. Enabling this feature contributes to enhancing the extension."></switch-button>
 
-        <div class="save-button-container">
-          <button id="save">Save</button>
+
+      <div>
+        <div id="youtube-error">No errors found</div>
+        <div>
+          <p class="error-helper-message">If there is an error, please consider delivering this message to the
+            developer. You have the option to share it within a Reddit megathread or open an issue on GitHub.</p>
+          <div class="error-helper-message-links">
+            <p><span>Reddit:</span> <a href="https://www.reddit.com/r/adskipper/comments/18kgii8/issues_megathread/"
+                                       target="_blank" rel="noreferrer">https://www.reddit.com/r/adskipper/comments/18kgii8/issues_megathread/</a>
+            </p>
+            <p><span>GitHub:</span> <a href="https://github.com/M1ck0/adskipper-extension" target="_blank"
+                                       rel="noreferrer">https://github.com/M1ck0/adskipper-extension</a></p>
+          </div>
         </div>
-        <p id="status"></p>
       </div>
     </div>
 
-    <script src="components/switch/switch.js"></script>
-    <script src="options.js"></script>
-  </body>
+    <div class="save-button-container">
+      <button id="save">Save</button>
+    </div>
+    <p id="status"></p>
+  </div>
+</div>
+
+<script src="components/switch/switch.js"></script>
+<script src="options.js"></script>
+</body>
 </html>

@@ -95,14 +95,38 @@ p#status {
   font-style: italic;
 }
 
+#youtube-error {
+  background-color: #eee;
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 
+#youtube-error p {
+  font-size: 14px;
+}
 
+#youtube-error p:first-child {
+  font-size: 16px;
+  font-weight: 600;
+}
 
+.error-helper-message {
+  font-style: italic;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
 
+.error-helper-message-links {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
 
-
-
-
-
-
-
+.error-helper-message-links span {
+  font-weight: 600;
+}

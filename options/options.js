@@ -1,14 +1,10 @@
 // Defining constants
 const WEBSITES = [
   {domain: "https://youtube.com", name: "youtube", sidebarName: "YouTube"},
-  {domain: "https://xvideos.com", name: "xvideos", sidebarName: "XVideos"},
-  {domain: "https://pornhub.com", name: "pornhub", sidebarName: "PornHub"},
 ];
 
 const OPTIONS = {
-  "youtube": ["ads", "shorts"],
-  "xvideos": ["ads", "popup"],
-  "pornhub": ["ads"],
+  "youtube": ["ads", "shorts", "recommendations", "errors"],
 };
 const SAVE_BUTTON_ID = 'save';
 
@@ -34,14 +30,14 @@ const setActiveWebsite = (website) => {
 }
 
 // Adding Event Listeners to the links
-document.addEventListener('DOMContentLoaded', function() {
-  WEBSITES.forEach(function(website) {
-    document.getElementById(`link-item-${website.name}`).addEventListener('click', function() {
+document.addEventListener('DOMContentLoaded', function () {
+  WEBSITES.forEach(function (website) {
+    document.getElementById(`link-item-${website.name}`).addEventListener('click', function () {
       WEBSITES.forEach(resetWebsiteAppearance);
       setActiveWebsite(website);
     });
   });
-  
+
   document.getElementById(`link-item-${WEBSITES[0].name}`).click();
 });
 
@@ -51,10 +47,10 @@ const restoreOptions = () => {
     WEBSITES.forEach(website => {
       OPTIONS[website.name].forEach((option) => {
         const storedValue = items[`${website.name}-${option}`];
-        
+
         // By default, set `ads` option to true. Other options default to false.
         const defaultValue = option === 'ads';
-        
+
         document.getElementById(`switch-${website.name}-${option}`).checked = (storedValue !== undefined) ? storedValue : defaultValue;
       });
     });
@@ -68,22 +64,38 @@ const saveOptions = () => {
       options[`${website.name}-${option}`] = document.getElementById(`switch-${website.name}-${option}`).checked;
     });
   });
-  
-  chrome.storage.sync.set(options, function() {
+
+  chrome.storage.sync.set(options, function () {
     // Show message when item is saved
-    document.getElementById('status').innerHTML = 'Options saved successfully.';
-    
+    document.getElementById('status').innerHTML = 'Options saved successfully. Please reload your page for changes to take effect';
+
     setTimeout(() => {
       document.getElementById('status').innerHTML = '';
-    }, 1500)
+    }, 3000)
   });
 };
 
 // Adding Event Listeners for save button and initial load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   restoreOptions();
   document.getElementById(SAVE_BUTTON_ID).addEventListener('click', saveOptions);
   document.getElementById(`link-item-${WEBSITES[0].name}`).click();
+
+  chrome.storage.sync.get(["youtube-error-message", "youtube-errors"]).then(({
+         "youtube-error-message": youtubeErrorMessage,
+          "youtube-errors": youtubeErrors
+  }) => {
+    if (youtubeErrors) {
+      if (youtubeErrorMessage) {
+        const errorHTML = `
+          <p>${youtubeErrorMessage.stack}</p>`;
+
+        document.getElementById('youtube-error').innerHTML = errorHTML;
+      }
+    } else {
+      document.getElementById('youtube-error').parentElement.style.display = 'none';
+    }
+  });
 });
 
 // Use the Array.prototype.map method to create HTML for each website
