@@ -1,28 +1,31 @@
 const defined = v => v !== null && v !== undefined;
 
+const clickSkipButton = (adElement) => {
+  const skipButton = adElement.querySelector(".ytp-ad-skip-button-modern");
+  
+  if (defined(skipButton)) {
+    skipButton.click();
+    
+    return true
+  }
+}
+
 const stopYoutubeAd = () => {
   const adElement = document.querySelector(".ad-showing");
   const video = adElement?.querySelector("video");
   
-  if (defined(adElement) && defined(video)) {
-    // Check if video.duration is a finite number before assigning it to currentTime
-    const duration = video.duration;
-    if (typeof duration === 'number' && isFinite(duration)) {
-      video.currentTime = duration;
-    } else {
-      // invalid video duration
-      video.currentTime = 9999999;
-    }
-  }
-  
-  const skipButtons = document.querySelectorAll(".ytp-ad-skip-button-modern");
-  if (defined(skipButtons)) {
-    for (const skipButton of skipButtons) {
-      skipButton.click();
+  if (defined(video)) {
+    const skipped = clickSkipButton(adElement)
+    
+    if(!skipped) {
+      video.currentTime = video.duration;
+      
+      clickSkipButton()
     }
   }
   
   const overlayAds = document.querySelectorAll(".ytp-ad-overlay-slot");
+  
   for (const overlayAd of overlayAds) {
     overlayAd.style.visibility = "hidden";
   }
@@ -51,7 +54,7 @@ const removeRecommendationsAtTheEnd = () => {
   const recommendations = document.querySelectorAll('.ytd-player .ytp-ce-element')
   
   
-  if(recommendations?.length) {
+  if (recommendations?.length) {
     recommendations.forEach(item => item.remove())
   }
 }
@@ -59,7 +62,12 @@ const removeRecommendationsAtTheEnd = () => {
 
 if (typeof window !== "undefined") {
   chrome.storage.sync.get(["youtube-ads", "youtube-shorts", "youtube-errors", "youtube-recommendations"])
-    .then(({"youtube-ads": youtubeAds, "youtube-shorts": youtubeShorts, "youtube-errors": youtubeErrors, "youtube-recommendations": youtubeRecommendations}) => {
+    .then(({
+             "youtube-ads": youtubeAds,
+             "youtube-shorts": youtubeShorts,
+             "youtube-errors": youtubeErrors,
+             "youtube-recommendations": youtubeRecommendations
+           }) => {
       new MutationObserver(() => {
         if (youtubeAds === true || youtubeAds === undefined) {
           try {
@@ -77,7 +85,6 @@ if (typeof window !== "undefined") {
           }
         }
         
-        
         if (youtubeShorts) {
           try {
             hideYoutubeShorts();
@@ -86,10 +93,10 @@ if (typeof window !== "undefined") {
           }
         }
         
-        if(youtubeRecommendations) {
+        if (youtubeRecommendations) {
           try {
             removeRecommendationsAtTheEnd()
-          }  catch (e) {
+          } catch (e) {
             console.error(e);
           }
         }
@@ -101,3 +108,27 @@ if (typeof window !== "undefined") {
       });
     });
 }
+
+
+
+  const links = document.querySelectorAll('a');
+  
+  console.log('prefetch')
+  
+  links.forEach(link => {
+    link.addEventListener('mouseenter', function () {
+      prefetchLink(link.href);
+    });
+  });
+  
+  function prefetchLink(url) {
+    const prefetchLink = document.createElement('link');
+    prefetchLink.rel = 'prefetch';
+    prefetchLink.href = url;
+    
+    document.head.appendChild(prefetchLink);
+  }
+
+  window.addEventListener('load', function () {
+    // alert('page loaded')
+  })
