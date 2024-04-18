@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Ad Skipper",
   "description": "Automatic ad skipping extension",
-  "version": "2.8.3",
+  "version": "2.8.5",
   "icons": {
     "128": "icons/128.png",
     "48": "icons/48.png",
@@ -36,6 +36,9 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "miletadulovic98@gmail.com"
+    },
+    "gecko_android": {
+      "strict_min_version": "113.0"
     }
   }
 }
