@@ -30,6 +30,10 @@
       ],
       "matches": [
         "*://*.youtube.com/*"
+      ],
+      "exclude_matches": [
+        "*://music.youtube.com/*",
+        "*://*.music.youtube.com/*"
       ]
     }
   ],
