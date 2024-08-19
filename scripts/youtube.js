@@ -17,10 +17,18 @@ const clickSkipButton = () => {
   return false;
 };
 
-const stopYoutubeAd = () => {
-  const adElement = document.querySelector(
-    ".ad-showing .ad-interrupting video",
+const clickConfirmDialogButton = () => {
+  const confirmButton = document.querySelector(
+    ".style-scope.yt-confirm-dialog-renderer",
   );
+
+  if (confirmButton) {
+    confirmButton.click();
+  }
+};
+
+const stopYoutubeAd = () => {
+  const adElement = document.querySelector(".ad-showing.ad-interrupting video");
 
   if (adElement && adElement.readyState >= 3) {
     adElement.currentTime = adElement.duration - 1;
@@ -43,8 +51,19 @@ const hideYoutubeShorts = () => {
 
   shortsHomePage.forEach((item) => item.remove());
   shortsHistoryPage.forEach((item) => item.remove());
+
   if (shortsSidebar) {
     shortsSidebar.remove();
+  }
+};
+
+const checkAdBlockerMessage = () => {
+  if (
+    document.body.innerText.includes(
+      "Ad blockers violate YouTube's Terms of Service",
+    )
+  ) {
+    // window.location.reload();
   }
 };
 
@@ -60,9 +79,10 @@ let actionIntervalId = null;
 const performActions = (settings) => {
   const {
     "youtube-ads": youtubeAds,
-    "youtube-shorts": youtubeShorts,
     "youtube-errors": youtubeErrors,
     "youtube-recommendations": youtubeRecommendations,
+    "youtube-continue-watching": continueWatching,
+    "youtube-reload": youtubeReload,
   } = settings;
 
   if (youtubeAds !== false) {
@@ -76,17 +96,25 @@ const performActions = (settings) => {
     }
   }
 
-  if (youtubeShorts) {
+  if (youtubeRecommendations) {
     try {
-      hideYoutubeShorts();
+      removeRecommendationsAtTheEnd();
     } catch (e) {
       console.error(e);
     }
   }
 
-  if (youtubeRecommendations) {
+  if (continueWatching) {
     try {
-      removeRecommendationsAtTheEnd();
+      clickConfirmDialogButton();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  if (youtubeReload) {
+    try {
+      checkAdBlockerMessage();
     } catch (e) {
       console.error(e);
     }
@@ -106,20 +134,42 @@ const startActionsInterval = (settings) => {
 };
 
 const checkAndStartActions = () => {
-  const isWatchPage = window.location.pathname === "/watch";
+  const isWatchPage = window.location.pathname.includes("/watch");
 
-  if (isWatchPage && !actionIntervalId) {
+  if (isWatchPage && !actionIntervalId && chrome?.storage?.sync) {
     chrome.storage.sync
       .get([
         "youtube-ads",
-        "youtube-shorts",
         "youtube-errors",
         "youtube-recommendations",
+        "youtube-continue-watching",
       ])
       .then((settings) => {
         startActionsInterval(settings);
       });
   }
 };
+
+// check youtube shorts separately because the function should be ran
+// on every page and not just /watch
+const checkAndStartYouTubeShort = () => {
+  if (chrome?.storage?.sync) {
+    chrome.storage.sync.get(["youtube-shorts"]).then((settings) => {
+      const { "youtube-shorts": yotubeShorts } = settings;
+
+      if (yotubeShorts) {
+        try {
+          setInterval(() => {
+            hideYoutubeShorts();
+          }, 500);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    });
+  }
+};
+
+checkAndStartYouTubeShort();
 
 let checkIntervalId = setInterval(checkAndStartActions, 1000);

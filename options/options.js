@@ -4,7 +4,14 @@ const WEBSITES = [
 ];
 
 const OPTIONS = {
-  youtube: ["ads", "shorts", "recommendations", "errors"],
+  youtube: [
+    "ads",
+    "shorts",
+    "recommendations",
+    "errors",
+    "continue-watching",
+    "reload",
+  ],
 };
 const SAVE_BUTTON_ID = "save";
 
@@ -80,7 +87,7 @@ const saveOptions = () => {
   chrome.storage.sync.set(options, function () {
     // Show message when item is saved
     document.getElementById("status").innerHTML =
-      "Options saved successfully. Please reload your page for changes to take effect";
+      "Options saved successfully. Please reload YouTube page for changes to take effect";
 
     setTimeout(() => {
       document.getElementById("status").innerHTML = "";
