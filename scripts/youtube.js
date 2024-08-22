@@ -58,12 +58,15 @@ const hideYoutubeShorts = () => {
 };
 
 const checkAdBlockerMessage = () => {
-  if (
-    document.body.innerText.includes(
-      "Ad blockers violate YouTube's Terms of Service",
-    )
-  ) {
-    // window.location.reload();
+  const enforcementMessageElement = document.querySelector(
+    ".ytd-enforcement-message-view-model",
+  );
+  const playabilityErrorElement = document.querySelector(
+    ".yt-playability-error-supported-renderers",
+  );
+
+  if (enforcementMessageElement && playabilityErrorElement) {
+    window.location.reload();
   }
 };
 
@@ -112,7 +115,7 @@ const performActions = (settings) => {
     }
   }
 
-  if (youtubeReload) {
+  if (youtubeReload !== false) {
     try {
       checkAdBlockerMessage();
     } catch (e) {

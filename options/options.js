@@ -60,8 +60,8 @@ const restoreOptions = () => {
       OPTIONS[website.name].forEach((option) => {
         const storedValue = items[`${website.name}-${option}`];
 
-        // By default, set `ads` option to true. Other options default to false.
-        const defaultValue = option === "ads";
+        // By default, set `ads` and `reload` options to true. Other options default to false.
+        const defaultValue = option === "ads" || option === "reload";
 
         document.getElementById(`switch-${website.name}-${option}`).checked =
           storedValue !== undefined ? storedValue : defaultValue;
