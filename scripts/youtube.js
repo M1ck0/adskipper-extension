@@ -146,6 +146,7 @@ const checkAndStartActions = () => {
         "youtube-errors",
         "youtube-recommendations",
         "youtube-continue-watching",
+        "youtube-reload",
       ])
       .then((settings) => {
         startActionsInterval(settings);
