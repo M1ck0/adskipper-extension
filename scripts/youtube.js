@@ -1,20 +1,19 @@
 const defined = (v) => v !== null && v !== undefined;
+let _seekingInterval = null;
 
 const clickSkipButton = () => {
   const skipButton = document.querySelector(".ytp-skip-ad-button");
   const skipButtonModern = document.querySelector(".ytp-ad-skip-button-modern");
 
-  if (defined(skipButton)) {
-    skipButton.click();
-    return true;
-  }
-
   if (defined(skipButtonModern)) {
     skipButtonModern.click();
-    return true;
+    clearInterval(_seekingInterval);
   }
 
-  return false;
+  if (defined(skipButton)) {
+    skipButton.click();
+    clearInterval(_seekingInterval);
+  }
 };
 
 const clickConfirmDialogButton = () => {
@@ -31,12 +30,13 @@ const stopYoutubeAd = () => {
   const adElement = document.querySelector(".ad-showing.ad-interrupting video");
 
   if (adElement && adElement.readyState >= 3) {
-    adElement.currentTime = adElement.duration - 1;
+    adElement.currentTime = adElement.currentTime + 10;
   }
 
   clickSkipButton();
 
   const overlayAds = document.querySelectorAll(".ytp-ad-overlay-slot");
+
   overlayAds.forEach((overlayAd) => {
     overlayAd.style.visibility = "hidden";
   });
