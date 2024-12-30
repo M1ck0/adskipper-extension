@@ -44,16 +44,22 @@ const stopYoutubeAd = () => {
 
 const hideYoutubeShorts = () => {
   const shortsHomePage = document.querySelectorAll("[is-shorts]");
+  const shortsHomePageMobile = document.querySelectorAll("grid-shelf-view-model")
   const shortsHistoryPage = document.querySelectorAll(
     "ytd-reel-shelf-renderer",
   );
   const shortsSidebar = document.querySelector('[title="Shorts"]');
+  const shortsBottomMobile = document.querySelector('.pivot-shorts');
 
   shortsHomePage.forEach((item) => item.remove());
+  shortsHomePageMobile.forEach((item) => item.remove());
   shortsHistoryPage.forEach((item) => item.remove());
 
   if (shortsSidebar) {
     shortsSidebar.remove();
+  }
+  if (shortsBottomMobile) {
+    shortsBottomMobile.parentElement.remove();
   }
 };
 
