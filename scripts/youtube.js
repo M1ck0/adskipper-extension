@@ -48,12 +48,16 @@ const hideYoutubeShorts = () => {
   const shortsHistoryPage = document.querySelectorAll(
     "ytd-reel-shelf-renderer",
   );
+  const shortsReelFeedMobile = document.querySelectorAll(
+    "ytm-reel-shelf-renderer",
+  );
   const shortsSidebar = document.querySelector('[title="Shorts"]');
   const shortsBottomMobile = document.querySelector('.pivot-shorts');
 
   shortsHomePage.forEach((item) => item.remove());
   shortsHomePageMobile.forEach((item) => item.remove());
   shortsHistoryPage.forEach((item) => item.remove());
+  shortsReelFeedMobile.forEach((item) => item.remove());
 
   if (shortsSidebar) {
     shortsSidebar.remove();
